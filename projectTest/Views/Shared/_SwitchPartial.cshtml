@@ -1,0 +1,51 @@
+﻿@{
+    var currentController = ViewContext.RouteData.Values["controller"].ToString();
+    var currentAction = ViewContext.RouteData.Values["action"].ToString();
+}
+
+<link rel="stylesheet" href="~/css/SwitchPartial.css" />
+
+<div class="container">
+    <ul class="nav nav-tabs nav-fill">
+        <li class="nav-item">
+            <a class="nav-link @(currentController == "User" && currentAction == "UserIndex" ? "active" : "")"
+               href="@Url.Action("UserIndex", "User", new { isLogin = ViewData["isLogin"], isManager = ViewData["isManager"] })">首頁</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link  dropdown-toggle @(currentController == "NewHire" ? "active" : "")" asp-area="" asp-controller="User" asp-action="UserNewHire"
+            id="DropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">新聘</a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start " aria-labelledby="DropdownMenuLink">
+                <li><a class="dropdown-item" href="@Url.Action("fullTimeAssistant", "NewHire", new { isLogin = ViewData["isLogin"], isManager = ViewData["isManager"],Category = "勞僱型-專任助理" })">勞僱型-專任助理</a></li>
+                <li><a class="dropdown-item" href="@Url.Action("partTimeAssistant", "NewHire", new { isLogin = ViewData["isLogin"], isManager = ViewData["isManager"],Category = "勞僱型-兼任助理" })">勞僱型-兼任助理</a></li>
+                <li><a class="dropdown-item" href="@Url.Action("partTimeAssistant", "NewHire", new { isLogin = ViewData["isLogin"], isManager = ViewData["isManager"],Category = "勞僱型-臨時工(工讀生)" })">勞僱型-臨時工(工讀生)</a></li>
+                <li><a class="dropdown-item" href="@Url.Action("partTimeAssistant", "NewHire", new { isLogin = ViewData["isLogin"], isManager = ViewData["isManager"],Category = "學習型-研究獎助生" })">學習型-研究獎助生</a></li>
+                <li><a class="dropdown-item" href="@Url.Action("partTimeAssistant", "NewHire", new { isLogin = ViewData["isLogin"], isManager = ViewData["isManager"],Category = "學習型-教學獎助生" })">學習型-教學獎助生</a></li>
+                <li><a class="dropdown-item" href="@Url.Action("partTimeAssistant", "NewHire", new { isLogin = ViewData["isLogin"], isManager = ViewData["isManager"],Category = "學習型-附服務負擔助學金" })">學習型-附服務負擔助學金</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(currentController == "Renewal" ? "active" : "")"
+               asp-area=""
+               asp-controller="Renewal"
+               asp-action="Renewal_Index"
+                asp-route-isManager="@ViewData["isManager"]"
+                asp-route-isLogin="@ViewData["isLogin"]">續聘</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(currentController == "SalaryChange" ? "active" : "")"
+               asp-area=""
+               asp-controller="SalaryChange"
+               asp-action="SalaryChange_Index"
+               asp-route-isManager="@ViewData["isManager"]"
+               asp-route-isLogin="@ViewData["isLogin"]">薪資變更</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(currentController == "Resignation" ? "active" : "")"
+               asp-area=""
+               asp-controller="Resignation"
+               asp-action="Resignation_Index"
+               asp-route-isManager="@ViewData["isManager"]"
+               asp-route-isLogin="@ViewData["isLogin"]">離職</a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,175 @@
+﻿@model projectTest.Models.PartTime_order
+
+@{
+    Layout = "_ManagerLayout";
+    ViewData["Title"] = "ManagerReview";
+    ViewData["userName"] = "張佳琪";
+    ViewData["isLogin"] = 1;
+    ViewData["isManager"] = 1;
+}
+<link rel="stylesheet" href="~/css/ManagerReview.css" />
+<table>
+    <thead>
+        <tr>
+            <td colspan="6" class="header">國立高雄大學獎助生、兼任助理及臨時工申請表</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="title">申請單號</td>
+            <td>@Html.DisplayFor(item => item.PartTime_orderNo)</td>
+            <td class="title">申請處室</td>
+            <td>@Html.DisplayFor(item => item.ApplicationOffice)</td>
+            <td class="title">申請人</td>
+            <td>@Html.DisplayFor(item => item.ApplicantName)</td>
+        </tr>
+        <tr>
+            <td class="title">申請事項</td>
+            <td>
+                @Html.DisplayFor(item => item.Application)
+
+                @if (Model.Application == "離職")
+                {
+                    var resignDate = Model.ResignDate;
+                    if (!string.IsNullOrEmpty(resignDate))
+                    {
+                        var resignYear = resignDate.Substring(0, 3);
+                        var resignMonth = resignDate.Substring(3, 2);
+                        var resignDay = resignDate.Substring(5, 2);
+                        <br>
+                        <span>（自 @resignYear 年 @resignMonth 月 @resignDay 日起離職）</span>
+                    }
+                }
+
+                @if (Model.Application == "薪資變更")
+                {
+                    var salaryChangeDate = Model.SalaryChangeDate;
+                    var salaryCategory = Model.SalaryCategory;
+                    var salary = Model.Salary;
+                    if (!string.IsNullOrEmpty(salaryChangeDate) && !string.IsNullOrEmpty(salaryCategory) && !string.IsNullOrEmpty(salary))
+                    {
+                        var salaryChangeYear = salaryChangeDate.Substring(0, 3);
+                        var salaryChangeMonth = salaryChangeDate.Substring(3, 2);
+                        var salaryChangeDay = salaryChangeDate.Substring(5, 2);
+                        <br>
+                        <span>（自 @salaryChangeYear 年 @salaryChangeMonth 月 @salaryChangeDay 日起調整薪資）</span>
+                    }
+                }
+            </td>
+            <td class="title">類別</td>
+            <td colspan="3">@Html.DisplayFor(item => item.Category)</td>
+        </tr>
+
+        <tr>
+            <td rowspan="6" class="title">計畫資料</td>
+            
+        </tr>
+        <tr>
+            <td class="detail-title">計畫名稱</td>
+            <td colspan="4">@Html.DisplayFor(item => item.PlanName)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">會計編號</td>
+            <td colspan="4">@Html.DisplayFor(item => item.AccountNo)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">計畫編號</td>
+            <td colspan="4">@Html.DisplayFor(item => item.PlanNo)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">委託機構</td>
+            <td colspan="4">@Html.DisplayFor(item => item.CommissionName)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">執行期間</td>
+            <td colspan="4">@Html.DisplayFor(item => item.PlanStartDate) ~ @Html.DisplayFor(item => item.PlanEndDate)</td>
+        </tr>        
+
+
+        <tr>
+            <td rowspan="10" class="title no-wrap">約用人員資料</td>
+            <td class="detail-title">身分別</td>
+            <td colspan="4">@Html.DisplayFor(item => item.StudyStatus) @Html.DisplayFor(item => item.StudyStatusMemo)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">姓名</td>
+            <td colspan="4">@Html.DisplayFor(item => item.EmployedName)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">出生日期</td>
+            <td colspan="4">@Html.DisplayFor(item => item.Birthday)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">身分證字號</td>
+            <td colspan="4">@Html.DisplayFor(item => item.ID)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">手機</td>
+            <td colspan="4">@Html.DisplayFor(item => item.phone)</td>
+        </tr>
+        
+        <tr>
+            <td class="detail-title">約用期間</td>
+            <td colspan="4">@Html.DisplayFor(item => item.EmployedStartDate) ~ @Html.DisplayFor(item => item.EmployedEndDate)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">級別</td>
+            <td colspan="4">@Html.DisplayFor(item => item.EducationLevel)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">獎助金/工作酬金</td>
+            <td colspan="4">@Html.DisplayFor(item => item.SalaryCategory)，@Html.DisplayFor(item => item.Salary)元</td>
+        </tr>
+        <tr>
+            <td class="detail-title">是否為首次執行國科會計畫之參與研究人員</td>
+            <td colspan="4">@Html.DisplayFor(item => item.IsTechPerson)</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="button-container">
+    @if (Model.Status == "待審核")
+    {
+        @Html.ActionLink(
+                "通過",
+                actionName: "ApproveOrder",
+                controllerName: "Manager",
+                routeValues: new { isLogin = ViewData["isLogin"], order_id = Model.PartTime_orderNo, category = Model.Category },
+                htmlAttributes: new { @class = "btn btn-info" }
+                )
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">退件</button>
+        <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="rejectModalLabel">填寫退件理由</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea class="form-control" id="rejectReason" rows="4" placeholder="請輸入退件理由"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <form id="rejectForm" method="post" action="@Url.Action("RejectOrder", "Manager")">
+
+                            <input type="hidden" id="hiddenRejectReason" name="rejectReason" />
+                            <input type="hidden" name="order_id" value="@Model.PartTime_orderNo" />
+                            <input type="hidden" name="category" value="@Model.Category" />
+                            <input type="hidden" name="isLogin" value="@ViewData["isLogin"]" />
+                            <input type="hidden" name="isManager" value="@ViewData["isManager"]" />
+
+                            <button type="submit" class="btn btn-info">確定退件</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    document.querySelector('#rejectForm button[type="submit"]').addEventListener('click', function () {
+        var rejectReason = document.getElementById('rejectReason').value;
+        document.getElementById('hiddenRejectReason').value = rejectReason;
+    });
+</script>

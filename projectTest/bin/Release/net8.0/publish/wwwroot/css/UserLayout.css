@@ -1,0 +1,77 @@
+﻿.navbar-custom {
+    background-color: #F5D97F;
+}
+
+.navbar-custom .navbar-brand img {
+    max-width: 70px;
+}
+
+
+.userLogo {
+    margin-right: 15px
+}
+
+.userLogo img {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.userName {
+    margin-right: 15px;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.logout-btn img {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.logout-text {
+    font-size: 24px;
+    color: black;
+    font-weight: bold;
+}
+
+.switch-button {
+    background-color: #F5D97F;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.switch-button:hover {
+    background-color: #FFF0A0;
+    transform: scale(1.1);
+}
+
+.switch-button:active {
+    background-color: #D4B968;
+    transform: scale(0.95);
+}
+
+@media (max-width:768px) {
+    .navbar-custom .navbar-brand img {
+        max-width: 50px;
+    }
+
+    .userLogo img {
+        max-width: 30px;
+        max-height: 30px;
+    }
+
+    .logout-btn img {
+        width: 30px;
+        height: 30px;
+    }
+}

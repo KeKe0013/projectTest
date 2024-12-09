@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "_UserLayout";
+    ViewData["Title"] = "Login";
+    ViewData["isLogin"] = 0;
+}
+<link rel="stylesheet" href="~/css/Login.css" />
+<div class="login-container">
+    <h1>登入</h1>
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+    {
+        <div class="login_area">
+            <div class="login_row">                
+                <span>帳號</span>
+                @Html.TextBox("username", null, new { @class = "form-control", required = "required" })
+                @* <input type="text" id="username" name="username" required> *@
+            </div>
+            <div class="login_row">
+                <span>密碼</span>
+                @* <input type="password" id="password" name="password" required> *@
+                @Html.Password("password", null, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+        <button type="submit" name="login">確認</button>        
+    }
+    
+    
+</div>

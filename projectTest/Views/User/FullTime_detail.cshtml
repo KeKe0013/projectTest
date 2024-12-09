@@ -1,0 +1,158 @@
+﻿@model projectTest.ViewModels.FullTimeOrderViewModel
+
+@{
+    Layout = "_UserLayout";
+    ViewData["Title"] = "FullTime_detail";
+    ViewData["userName"] = "張佳琪";
+}
+<link rel="stylesheet" href="~/css/ManagerReview.css" />
+<table>
+    <thead>
+        <tr>
+            <td colspan="4" class="header">國立高雄大學計畫專任人員聘僱申請單</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="title">申請單號</td>
+            <td>@Html.DisplayFor(item => item.FullTimeOrder.FullTime_orderNo)</td>
+            <td class="title">申請單位</td>
+            <td>@Html.DisplayFor(item => item.FullTimeOrder.ApplicationOffice)</td>
+            
+        </tr>
+        <tr>
+            <td class="title">申請人</td>
+            <td>@Html.DisplayFor(item => item.FullTimeOrder.ApplicantName)</td>
+            <td class="title">申請事項</td>
+            <td>
+                @Html.DisplayFor(item => item.FullTimeOrder.Application)
+                @if (Model.FullTimeOrder.Application == "離職")
+                {
+                    var resignDate = Model.FullTimeOrder.ResignDate;
+                    if (!string.IsNullOrEmpty(resignDate))
+                    {
+                        var resignYear = resignDate.Substring(0, 3);
+                        var resignMonth = resignDate.Substring(3, 2);
+                        var resignDay = resignDate.Substring(5, 2);
+                        <span>（自 @resignYear 年 @resignMonth 月 @resignDay 日起離職）</span>
+                    }
+                }
+
+                @if (Model.FullTimeOrder.Application == "薪資變更")
+                {
+                    var salaryChangeDate = Model.FullTimeOrder.SalaryChangeDate;
+                    var salary = Model.FullTimeOrder.Salary;
+                    if (!string.IsNullOrEmpty(salaryChangeDate) && !string.IsNullOrEmpty(salary))
+                    {
+                        var salaryChangeYear = salaryChangeDate.Substring(0, 3);
+                        var salaryChangeMonth = salaryChangeDate.Substring(3, 2);
+                        var salaryChangeDay = salaryChangeDate.Substring(5, 2);
+                        <br>
+                        <span>（自 @salaryChangeYear 年 @salaryChangeMonth 月 @salaryChangeDay 日起調整薪資）</span>
+                    }
+                }
+            </td>
+        </tr>
+
+        
+        @foreach (var detail in Model.FullTimeOrderDetails)
+        {
+            <tr>
+                <td rowspan="6" class="title">計畫資料</td>
+            </tr>
+            <tr>
+                <td class="detail-title">計畫名稱</td>
+                <td colspan="4">@detail.PlanName</td>
+            </tr>
+            <tr>
+                <td class="detail-title">會計編號</td>
+                <td colspan="4">@detail.AccountNo</td>
+            </tr>
+            <tr>
+                <td class="detail-title">計畫編號</td>
+                <td colspan="4">@detail.PlanNo</td>
+            </tr>
+            <tr>
+                <td class="detail-title">委託/補助單位</td>
+                <td colspan="4">@detail.CommissionName</td>
+            </tr>
+            <tr>
+                <td class="detail-title">執行期間</td>
+                <td colspan="4">@detail.PlanStartDate ~ @detail.PlanEndDate</td>
+            </tr>
+            <tr>
+                <td colspan="5" class="separator"></td>
+            </tr>
+        }
+
+
+        <tr>
+            <td rowspan="9" class="title no-wrap">聘僱人員資料</td>
+            <td class="detail-title">姓名</td>
+            <td colspan="4">@Html.DisplayFor(item => item.FullTimeOrder.EmployedName)</td>
+        </tr>        
+        <tr>
+            <td class="detail-title">出生日期</td>
+            <td colspan="4">@Html.DisplayFor(item => item.FullTimeOrder.Birthday)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">身分證字號</td>
+            <td colspan="4">@Html.DisplayFor(item => item.FullTimeOrder.ID)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">聯絡電話</td>
+            <td colspan="4">@Html.DisplayFor(item => item.FullTimeOrder.Phone)</td>
+        </tr>
+
+        <tr>
+            <td class="detail-title">聘僱期間</td>
+            <td colspan="4">@Html.DisplayFor(item => item.FullTimeOrder.EmployedStartDate) ~ @Html.DisplayFor(item => item.FullTimeOrder.EmployedEndDate)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">學歷</td>
+            <td colspan="4">@Html.DisplayFor(item => item.FullTimeOrder.EducationLevel)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">職稱</td>
+            <td colspan="4">@Html.DisplayFor(item => item.FullTimeOrder.JobTitle)</td>
+        </tr>
+        <tr>
+            <td class="detail-title">薪級</td>
+            <td colspan="4">第 @Html.DisplayFor(item => item.FullTimeOrder.SalaryGrade) 級</td>
+        </tr>
+
+        <tr>
+            <td class="detail-title">薪資</td>
+            <td colspan="4">每月 @Html.DisplayFor(item => item.FullTimeOrder.Salary) 元</td>
+        </tr>
+
+        @if(Model.FullTimeOrder.Application == "薪資變更")
+        {
+            <tr>
+                <td class="title no-wrap">薪資調整理由及調整幅度說明</td>            
+                <td colspan="4">
+               
+                    @if (Model.FullTimeOrder.SalaryChangeReason != null)
+                    {
+                        @Html.DisplayFor(item => item.FullTimeOrder.SalaryChangeReason)
+                    }
+                    else{
+                        <span>無</span>                        
+                    }
+                    </td>
+            </tr>
+        }
+        
+        
+    </tbody>
+</table>
+
+<div class="button-container">
+    @Html.ActionLink(
+            "返回",
+            actionName: "UserIndex",
+            controllerName: "User",
+            routeValues: new { isLogin = ViewData["isLogin"], isManager = ViewData["isManager"] },
+            htmlAttributes: new { @class = "btn btn-info" }
+            )
+</div>

@@ -1,0 +1,153 @@
+﻿@model projectTest.ViewModels.FullTimeOrderViewModel
+
+@{
+    Layout = ViewData["isManager"] != null && (int)ViewData["isManager"] == 1 ? "_ManagerLayout" : "_UserLayout";
+    ViewData["Title"] = "FullTime_Edit_Resignation";
+    ViewData["userName"] = "張佳琪";
+    ViewData["isLogin"] = 1;
+    ViewData["isManager"] = 1;
+}
+
+<link rel="stylesheet" href="~/css/Edit.css" />
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/UserNewHire_fullTime.js" asp-append-version="true"></script>
+}
+
+<div class="Application-form">
+    @using (Html.BeginForm("FullTime_Edit_Resignation", "EditOrder", FormMethod.Post, new { id = "Requisition" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("isLogin", ViewData["isLogin"])
+        @Html.Hidden("isManager", ViewData["isManager"])
+        @Html.HiddenFor(m => m.FullTimeOrder.FullTime_orderNo)
+
+        <h2>國立高雄大學計畫專任人員聘僱申請單</h2>
+        <fieldset class="application">
+            <legend>申請事項</legend>
+            <div class="detail">
+                <label for="Resignation">離職</label>
+                <label>
+                    自
+                    @Html.TextBox("resignDateInput", "", new { type = "date", id = "resignDateInput", @class = "date-input", @required = "required" })
+                    @Html.HiddenFor(m => m.FullTimeOrder.ResignDate, new { id = "resignDateHidden" })
+                    @Html.ValidationMessageFor(m => m.FullTimeOrder.ResignDate, "", new { @class = "text-danger" })
+                    起離職
+
+                </label>
+            </div>
+            <legend>類別</legend>
+            <div class="detail">
+                <label>@Html.DisplayFor(m => m.FullTimeOrder.Category)</label>
+            </div>
+        </fieldset>
+        <hr>
+
+        @foreach (var plan in Model.FullTimeOrderDetails)
+        {
+            <fieldset class="plan-information">
+                <legend>計畫資料</legend>
+                <div class="detail">
+                    <div class="category-row">
+                        <p>
+                            @Html.LabelFor(m => plan.PlanName, "計畫名稱")
+                            @Html.TextBox("planName", plan.PlanName, new { id = $"planName_{plan.PlanNo}", @readonly = "readonly" })
+                        </p>
+                        <p>
+                            @Html.Label("accountNo", "會計編號")
+                            @Html.TextBox("accountNo", plan.AccountNo, new { id = $"accountNo_{plan.PlanNo}", @readonly = "readonly" })
+                        </p>
+                        <p>
+                            @Html.Label("planNo", "計畫編號")
+                            @Html.TextBox("planNo", plan.PlanNo, new { id = $"planNo_{plan.PlanNo}", @readonly = "readonly" })
+                        </p>
+                        <p>
+                            @Html.Label("CommissionName", "委託機構")
+                            @Html.TextBox("CommissionName", plan.CommissionName, new { id = $"CommissionName_{plan.PlanNo}", @readonly = "readonly" })
+                        </p>
+                        <div>
+                            <p>
+                                @Html.Label("planStartDate", "執行期間")
+                                @Html.TextBox($"planStartInput_{plan.PlanNo}", ConvertROCDate(plan.PlanStartDate),
+                                         new { type = "date", id = $"planStartInput_{plan.PlanNo}", @class = "date-input", @readonly = "readonly" })
+                                @Html.Hidden($"planStartHidden_{plan.PlanNo}", plan.PlanStartDate, new { id = $"planStartHidden_{plan.PlanNo}" })
+
+                                @Html.Label("planEndDate", "~")
+                                @Html.TextBox($"planEndInput_{plan.PlanNo}", ConvertROCDate(plan.PlanEndDate),
+                                         new { type = "date", id = $"planEndInput_{plan.PlanNo}", @class = "date-input", @readonly = "readonly" })
+                                @Html.Hidden($"planEndHidden_{plan.PlanNo}", plan.PlanEndDate, new { id = $"planEndHidden_{plan.PlanNo}" })
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        }
+        <hr>
+        <fieldset class="person-information">
+            <legend>聘僱人員資料</legend>
+            <div class="detail">
+                <p>
+                    <label for="name">姓名</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.EmployedName)</label>
+                </p>
+                <p>
+                    <label for="idNumber">身分證字號</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.ID)</label>
+                </p>
+                <p>
+                    <label for="birthday">出生日期</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.Birthday)</label>
+                </p>
+                <p>
+                    <label for="phone">聯絡電話</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.Phone)</label>
+                </p>
+
+                <p>
+                    <label for="educationLevel">學歷</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.EducationLevel)</label>
+                </p>
+                <p>
+                    <label for="jobTitle">職稱</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.JobTitle)</label>
+                </p>
+                <p>
+                    <label for="salaryGrade">薪級</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.SalaryGrade)</label>
+                </p>
+                <p>
+                    <label for="salary">薪資</label>
+                    <label>每月 @Html.DisplayFor(m => m.FullTimeOrder.Salary) 元整</label>
+                </p>
+            </div>
+        </fieldset>
+        <div class="button-container">
+            <button type="submit" name="submitAction" value="save">儲存</button>
+            <button type="submit" name="submitAction" value="cancel">取消</button>
+        </div>
+    }
+</div>
+
+@functions {
+    public static string ConvertROCDate(string rocDateString)
+    {
+        if (string.IsNullOrWhiteSpace(rocDateString) || rocDateString.Length != 7)
+            return string.Empty;
+
+        try
+        {
+            // 解析民國年、月、日
+            int rocYear = int.Parse(rocDateString.Substring(0, 3)) + 1911;
+            int month = int.Parse(rocDateString.Substring(3, 2));
+            int day = int.Parse(rocDateString.Substring(5, 2));
+
+            // 建立 DateTime 並轉換格式
+            DateTime date = new DateTime(rocYear, month, day);
+            return date.ToString("yyyy-MM-dd");
+        }
+        catch
+        {
+            return string.Empty;
+        }
+    }
+}

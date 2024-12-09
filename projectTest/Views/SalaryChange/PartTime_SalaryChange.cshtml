@@ -1,0 +1,153 @@
+﻿@model projectTest.Models.PartTime_order
+
+@{
+    Layout = "_UserLayout";
+    ViewData["Title"] = "SalaryChange";
+    ViewData["userName"] = "張佳琪";
+    ViewData["isLogin"] = 1;
+    ViewData["isManager"] = 1;
+}
+
+<link rel="stylesheet" href="~/css/Edit.css" />
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/SalaryChange_partTime.js" asp-append-version="true"></script>
+}
+
+<div class="Application-form">
+    <form id="Requisition" method="post" asp-action="PartTime_SalaryChange">
+        <input type="hidden" name="originalOrderId" value="@Model.PartTime_orderNo" />
+
+        @Html.Hidden("isLogin", ViewData["isLogin"])
+        @Html.Hidden("isManager", ViewData["isManager"])
+        @Html.Hidden("category", ViewData["category"])
+
+        <h2>國立高雄大學獎助生、兼任助理及臨時工申請表</h2>
+        <fieldset class="application">
+            <legend>申請事項</legend>
+            <div class="detail">
+                <label for="SalaryChange">薪資變更</label>
+                <label>
+                    原薪資為
+                    @if (Model.SalaryCategory == "月薪")
+                    {
+                        <label>每月 @Html.DisplayFor(m => m.Salary) 元</label>
+                    }
+                    else if (Model.SalaryCategory == "日薪")
+                    {
+                        <label>每日 @Html.DisplayFor(m => m.Salary) 元</label>
+                    }
+                    else
+                    {
+                        <label>每小時 @Html.DisplayFor(m => m.Salary) 元</label>
+                    }
+                    ，自
+                    <input type="date" id="salaryChangeDate" name="salaryChangeDate" class="date-input" required>
+                    @Html.ValidationMessageFor(m => m.SalaryChangeDate, "", new { @class = "text-danger" })
+                    起調整薪資為
+                    <div class="detail-detail salary">
+                        <p>
+                            @Html.RadioButtonFor(m => m.SalaryCategory, "月薪", new { id = "monthlySalary", @required = "required" })
+                            @Html.Label("monthlySalary", "月薪，每月")
+                            @Html.EditorFor(m => m.Salary, new { htmlAttributes = new { id = "monthlySalaryAmount", @disabled = "disabled" } })
+
+                            @Html.RadioButtonFor(m => m.SalaryCategory, "日薪", new { id = "dailySalary" })
+                            @Html.Label("dailySalary", "日薪，每日")
+                            @Html.EditorFor(m => m.Salary, new { htmlAttributes = new { id = "dailySalaryAmount", @disabled = "disabled" } })
+                        </p>
+                        <p>
+                            @Html.RadioButtonFor(m => m.SalaryCategory, "時薪", new { id = "hourlySalary" })
+                            @Html.Label("hourlySalary", "時薪，每小時")
+                            @Html.EditorFor(m => m.Salary, new { htmlAttributes = new { id = "hourlySalaryAmount", @disabled = "disabled" } })
+                        </p>
+                    </div>
+                </label>
+            </div>
+            <legend>類別</legend>
+            <div class="detail">
+                <label>@Html.DisplayFor(m => m.Category)</label>
+            </div>
+        </fieldset>
+
+        <hr>
+
+        <fieldset class="plan-information">
+            <legend>計畫資料</legend>
+            <div class="detail">               
+                <p>
+                    <label for="projectName">計畫名稱</label>
+                    <label>@Html.DisplayFor(m => m.PlanName)</label>
+                </p>
+                <p>
+                    <label for="accountingNumber">會計編號</label>
+                    <label>@Html.DisplayFor(m => m.AccountNo)</label>
+                </p>
+                <p>
+                    <label for="projectNumber">計畫編號</label>
+                    <label>@Html.DisplayFor(m => m.PlanNo)</label>
+                </p>
+                <p>
+                    <label for="commissionedUnit">委託機構</label>
+                    <label>@Html.DisplayFor(m => m.CommissionName)</label>
+                </p>
+
+                <p>
+                    <label for="startDate">執行期間</label>
+                    <label>@Html.DisplayFor(m => m.PlanStartDate)</label>
+                    <label for="endDate">~</label>
+                    <label>@Html.DisplayFor(m => m.PlanEndDate)</label>
+                </p>
+            </div>
+        </fieldset>
+        <hr>
+        <fieldset class="person-information">
+            <legend>約用人員資料</legend>
+            <div class="detail">
+                <p>
+                    <label for="studentType">身份別</label>
+                    <label>@Html.DisplayFor(m => m.StudyStatus)</label>
+
+                    @if (Model.StudyStatus == "他校學生")
+                    {
+
+                        <label>( @Html.DisplayFor(m => m.StudyStatusMemo))</label>
+                    }
+                </p>
+                <p>
+                    <label for="name">姓名</label>
+                    <label>@Html.DisplayFor(m => m.EmployedName)</label>
+                </p>
+                <p>
+                    <label for="idNumber">身分證字號</label>
+                    <label>@Html.DisplayFor(m => m.ID)</label>
+                </p>
+                <p>
+                    <label for="birthday">出生日期</label>
+                    <label>@Html.DisplayFor(m => m.Birthday)</label>
+                </p>
+                <p>
+                    <label for="phone">手機</label>
+                    <label>@Html.DisplayFor(m => m.phone)</label>
+                </p>
+
+                <p>
+                    <label for="startDate">約用期間</label>
+                    <label>@Html.DisplayFor(m => m.EmployedStartDate)</label>
+                    <label for="endDate">~</label>
+                    <label>@Html.DisplayFor(m => m.EmployedEndDate)</label>
+                </p>
+                <p>
+                    <label for="rank">級別</label>
+                    <label>@Html.DisplayFor(m => m.EducationLevel)</label>
+                </p>                
+
+                <label for="isTechPerson">是否為首次執行國科會計畫之參與研究人員</label>
+                <label>@Html.DisplayFor(m => m.IsTechPerson)</label>
+            </div>
+        </fieldset>
+        <div class="button-container">
+            <button type="submit" name="submitAction" value="save">送出</button>
+            <button type="reset">取消</button>
+        </div>
+    </form>
+</div> 

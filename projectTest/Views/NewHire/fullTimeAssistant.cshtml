@@ -1,0 +1,181 @@
+﻿@model projectTest.ViewModels.FullTimeOrderViewModel
+
+@{
+    Layout = "_UserLayout";
+    ViewData["Title"] = "UserNewHire";
+    ViewData["userName"] = "張佳琪";
+    var isManager = ViewData["isManager"] as int?;
+    var isLogin = ViewData["isLogin"] as int?;    
+}
+
+<link rel="stylesheet" href="~/css/UserNewHire_fullTimeAssistant.css" />
+<partial name="_SwitchPartial" />
+
+@section Scripts {
+    <script src="~/js/UserNewHire_fullTime.js" asp-append-version="true"></script>
+    <script src="~/js/GetProjectData.js" asp-append-version="true"></script>
+}
+
+
+<div class="Application-form">
+    @using (Html.BeginForm("fullTimeAssistant", "NewHire", FormMethod.Post, new { id = "Requisition" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("isLogin", ViewData["isLogin"])
+        @Html.Hidden("isManager", ViewData["isManager"])       
+
+        <h2>國立高雄大學計畫專任人員聘僱申請單</h2>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <fieldset class="application">
+            <legend>申請事項</legend>
+            <div class="detail">
+                <label>@Html.DisplayFor(m => m.FullTimeOrder.Application)</label>
+                @Html.HiddenFor(m => m.FullTimeOrder.Application)
+            </div>
+        </fieldset>
+
+        <hr>
+        <fieldset class="plan-information">
+            <legend>計畫資料</legend>
+            <div class="detail">
+                <div class="category-row">
+                    <p>
+                        @Html.Label("fundingSource1", "經費來源")
+                        @Html.DropDownList("fundingSource1", new List<SelectListItem>{
+                            new SelectListItem { Value = "none", Text = "請選擇經費來源", Selected = true },
+                            new SelectListItem { Value = "(經常門)部門預算", Text = "(經常門)部門預算" },
+                            new SelectListItem { Value = "(經常門)計畫預算", Text = "(經常門)計畫預算" },
+                    }, new { id = "fundingSource1", @required = "required", @onchange = "updatePlanNames()" })
+
+                    </p>
+                    <p>
+                        @Html.LabelFor(m => m.FullTimeOrderDetails[0].PlanName, "計畫名稱")
+                        @Html.DropDownListFor(m => m.FullTimeOrderDetails[0].PlanName, new List<SelectListItem>{
+                            new SelectListItem { Value = "", Text = "請選擇計畫名稱", Selected = true }
+                            }, new { id = "planName1", @required = "required" })
+                        @Html.ValidationMessageFor(m => m.FullTimeOrderDetails[0].PlanName, "", new { @class = "validation-message" })
+                    </p>
+                    <p>
+                        @Html.Label("accountNo1", "會計編號")
+                        @Html.EditorFor(m => m.FullTimeOrderDetails[0].AccountNo, new { htmlAttributes = new { id = "accountNo1", @required = "required" } })
+                        @Html.ValidationMessageFor(m => m.FullTimeOrderDetails[0].AccountNo, "", new { @class = "validation-message" })
+                    </p>
+                    <p>
+                        @Html.Label("planNo1", "計畫編號")
+                        @Html.EditorFor(m => m.FullTimeOrderDetails[0].PlanNo, new { htmlAttributes = new { id = "planNo1" } })
+                    </p>
+                    <p>
+                        @Html.Label("CommissionName1", "委託機構")
+                        @Html.EditorFor(m => m.FullTimeOrderDetails[0].CommissionName, new { htmlAttributes = new { id = "CommissionName1", @required = "required", @readonly = "readonly" } })
+                    </p>
+                    <div>                        
+                        <p>
+                            @Html.Label("planStartDate1", "執行期間")
+                            @Html.TextBox("planStartInput1", "", new { type = "date", id = "planStartInput1", @class = "date-input", @required = "required", @readonly = "readonly" })
+                            @Html.HiddenFor(m => m.FullTimeOrderDetails[0].PlanStartDate, new { id = "planStartHidden1" })
+                            @Html.ValidationMessageFor(m => m.FullTimeOrderDetails[0].PlanStartDate, "", new { @class = "text-danger" })
+
+                            @Html.Label("planEndDate1", "~")
+                            @Html.TextBox("planEndInput1", "", new { type = "date", id = "planEndInput1", @class = "date-input", @required = "required" ,@readonly = "readonly" })
+                            @Html.HiddenFor(m => m.FullTimeOrderDetails[0].PlanEndDate, new { id = "planEndHidden1" })
+                            @Html.ValidationMessageFor(m => m.FullTimeOrderDetails[0].PlanEndDate, "", new { @class = "text-danger" })
+                        </p>                        
+                    </div>
+                    @Html.HiddenFor(m => m.FullTimeOrderDetails[0].LeaderName, new { id = "leaderNameHidden1" })
+                </div>
+            </div>
+            <div class="button-addPlan">
+                <button type="button" onclick="addPlanInfo()">新增計畫資料</button>
+            </div>
+        </fieldset>
+        <hr>
+        <fieldset class="person-information">
+            <legend>聘僱人員資料</legend>
+            <div class="detail">
+                <p>
+                    @Html.LabelFor(m => m.FullTimeOrder.EmployedName, "姓名")
+                    @Html.EditorFor(m => m.FullTimeOrder.EmployedName, new { htmlAttributes = new { id = "name", @required = "required" } })
+                    @Html.ValidationMessageFor(m => m.FullTimeOrder.EmployedName, "", new { @class = "text-danger" })
+
+                    @Html.Label("ID", "身分證字號")
+                    @Html.EditorFor(m => m.FullTimeOrder.ID, new { htmlAttributes = new { id = "ID", @required = "required" } })
+                    @Html.ValidationMessageFor(m => m.FullTimeOrder.ID, "", new { @class = "text-danger" })
+                </p>
+
+                <p>
+                    @Html.Label("birthday", "出生日期")
+                    @Html.TextBox("birthdayInput", "", new { type = "date", id = "birthdayInput", @class = "date-input", @required = "required" })
+                    @Html.HiddenFor(m => m.FullTimeOrder.Birthday, new { id = "birthdayHidden" })
+                    @Html.ValidationMessageFor(m => m.FullTimeOrder.Birthday, "", new { @class = "text-danger" })
+
+                    @Html.Label("phone", "聯絡電話")
+                    @Html.EditorFor(m => m.FullTimeOrder.Phone, new { htmlAttributes = new { id = "phone", @required = "required" } })
+                    @Html.ValidationMessageFor(m => m.FullTimeOrder.Phone, "", new { @class = "text-danger" })
+                </p>
+
+                <p>
+                    @Html.Label("Employment period", "聘僱期間")
+
+                    @Html.TextBox("employedStartInput", "", new { type = "date", id = "employedStartInput", @class = "date-input", @required = "required" })
+                    @Html.HiddenFor(m => m.FullTimeOrder.EmployedStartDate, new { id = "employedStartHidden" })
+                    @Html.ValidationMessageFor(m => m.FullTimeOrder.EmployedStartDate, "", new { @class = "text-danger" })
+
+                    @Html.LabelFor(m => m.FullTimeOrder.EmployedEndDate, "~")
+                    @Html.TextBox("employedEndInput", "", new { type = "date", id = "employedEndInput", @class = "date-input", @required = "required" })
+                    @Html.HiddenFor(m => m.FullTimeOrder.EmployedEndDate, new { id = "employedEndHidden" })
+                    @Html.ValidationMessageFor(m => m.FullTimeOrder.EmployedEndDate, "", new { @class = "text-danger" })
+
+
+                </p>
+                @Html.Label("educationLevel", "學歷")
+                <div class="detail-detail">
+                    <p>
+                        @Html.RadioButtonFor(m => m.FullTimeOrder.EducationLevel, "專科以下", new { id = "below", @required = "required" })
+                        @Html.Label("below", "專科以下")
+
+                        @Html.RadioButtonFor(m => m.FullTimeOrder.EducationLevel, "學士", new { id = "undergraduate" })
+                        @Html.Label("undergraduate", "學士")
+
+                        @Html.RadioButtonFor(m => m.FullTimeOrder.EducationLevel, "碩士", new { id = "graduate" })
+                        @Html.Label("graduate", "碩士")
+
+                        @Html.RadioButtonFor(m => m.FullTimeOrder.EducationLevel, "博士", new { id = "phdCandidate" })
+                        @Html.Label("phdCandidate", "博士")
+
+                    </p>
+                </div>
+                @Html.Label("jobTitle", "職稱")
+                @Html.EditorFor(m => m.FullTimeOrder.JobTitle, new { htmlAttributes = new { id = "jobTitle", @required = "required" } })
+                
+                <p>
+                    @Html.Label("salaryGrade", "薪級")
+                    @Html.DropDownListFor(m => m.FullTimeOrder.SalaryGrade, new List<SelectListItem>{
+                        new SelectListItem { Value = "0", Text = "請選擇薪級", Selected = true },
+                        new SelectListItem { Value = "1" ,Text = "1"},
+                        new SelectListItem { Value = "2" ,Text = "2"},
+                        new SelectListItem { Value = "3" ,Text = "3"},
+                        new SelectListItem { Value = "4" ,Text = "4"},
+                        new SelectListItem { Value = "5" ,Text = "5"},
+                        new SelectListItem { Value = "6" ,Text = "6"},
+                        new SelectListItem { Value = "7" ,Text = "7"},
+                        new SelectListItem { Value = "8" ,Text = "8"},
+                        new SelectListItem { Value = "9" ,Text = "9"}
+                }, new { id = "salaryGrade" })
+                </p>
+
+
+                @Html.Label("salary", "薪資")
+
+                @Html.Label("salary", "每月")
+                @Html.EditorFor(m => m.FullTimeOrder.Salary, new { htmlAttributes = new { id = "salary", @required = "required" } })
+                @Html.Label("salary", "元整")
+
+            </div>
+        </fieldset>
+        <div class="button-container">
+            <button type="submit" name="submitAction" value="save">儲存</button>
+            <button type="submit" name="submitAction" value="submit">送出</button>
+            <button type="reset">取消</button>
+        </div>
+    }
+</div>

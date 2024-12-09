@@ -1,0 +1,239 @@
+﻿@model projectTest.Models.PartTime_order
+
+@{
+    Layout = "_UserLayout";
+    ViewData["Title"] = "partTimeAssistant";
+    ViewData["userName"] = "張佳琪";
+    var isManager = ViewData["isManager"] as int?;
+    var isLogin = ViewData["isLogin"] as int?;
+}
+
+<link rel="stylesheet" href="~/css/UserNewHire_partTimeAssistant.css" />
+<partial name="_SwitchPartial" />
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/UserNewHire_partTime.js" asp-append-version="true"></script>
+    <script src="~/js/GetProjectData.js" asp-append-version="true"></script>
+}
+
+
+<div class="Application-form">
+    @using (Html.BeginForm("partTimeAssistant", "NewHire", FormMethod.Post, new { id = "Requisition" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("isLogin", ViewData["isLogin"])
+        @Html.Hidden("isManager", ViewData["isManager"])
+        
+
+        <h2>國立高雄大學獎助生、兼任助理及臨時工申請表</h2>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <fieldset class="application">
+            <legend>申請事項</legend>
+            <div class="detail">
+                <label>@Html.DisplayFor(m => m.Application)</label>
+                @Html.HiddenFor(m => m.Application)
+            </div>
+        </fieldset>
+        <fieldset class="category">
+            <legend>類別</legend>
+            <div class="detail">
+                <label> @Html.DisplayFor(m => m.Category)</label>
+                @Html.HiddenFor(m => m.Category)
+            </div>
+        </fieldset>
+        <hr>
+        <fieldset class="plan-information">
+            <legend>計畫資料</legend>
+            <div class="detail">
+                <div class="category-row">
+                    <p>
+                        @Html.Label("fundingSource1", "經費來源")
+                        @Html.DropDownList("fundingSource1", new List<SelectListItem>{
+                            new SelectListItem { Value = "", Text = "請選擇經費來源", Selected = true },
+                            new SelectListItem { Value = "(經常門)部門預算", Text = "(經常門)部門預算" },
+                            new SelectListItem { Value = "(經常門)計畫預算", Text = "(經常門)計畫預算" }
+                    }, new { id = "fundingSource1", @required = "required", @onchange = "updatePlanNames()" })
+                    </p>
+                    <p>
+                        @Html.LabelFor(m => m.PlanName, "計畫名稱")
+                        @Html.DropDownListFor(m => m.PlanName, new List<SelectListItem> {
+                    new SelectListItem { Value = "", Text = "請選擇計畫名稱", Selected = true }
+                    }, new { id = "planName1", @required = "required", @onchange = "updatePlanDetails()" })
+                        @Html.ValidationMessageFor(m => m.PlanName, "", new { @class = "validation-message" })
+                    </p>
+                    <p>
+                        @Html.Label("accountNo1", "會計編號")
+                        @Html.EditorFor(m => m.AccountNo, new { htmlAttributes = new { id = "accountNo1", @required = "required", @readonly = "readonly" } })
+                    </p>
+
+                    <p>
+                        @Html.Label("planNo1", "計畫編號")
+                        @Html.EditorFor(m => m.PlanNo, new { htmlAttributes = new { id = "planNo1", @readonly = "readonly" } })
+                    </p>
+                    <p>
+                        @Html.Label("CommissionName1", "委託機構")
+                        @Html.EditorFor(m => m.CommissionName, new { htmlAttributes = new { id = "CommissionName1", @required = "required", @readonly = "readonly" } })
+                    </p>
+                    <div>
+                        <p>
+                            @Html.Label("planStartDate1", "執行期間")
+                            @Html.TextBox("planStartInput1", "", new { type = "date", id = "planStartInput1", @class = "date-input", @required = "required", @readonly = "readonly" })
+                            @Html.HiddenFor(m => m.PlanStartDate, new { id = "planStartHidden1" })
+                            @Html.ValidationMessageFor(m => m.PlanStartDate, "", new { @class = "text-danger" })
+
+                            @Html.Label("planEndDate1", "~")
+                            @Html.TextBox("planEndInput1", "", new { type = "date", id = "planEndInput1", @class = "date-input", @required = "required", @readonly = "readonly" })
+                            @Html.HiddenFor(m => m.PlanEndDate, new { id = "planEndHidden1" })
+                            @Html.ValidationMessageFor(m => m.PlanEndDate, "", new { @class = "text-danger" })
+                        </p>
+                    </div>
+                    @Html.HiddenFor(m => m.LeaderName, new { id = "leaderNameHidden1" })
+
+                </div>
+            </div>
+        </fieldset>
+        <hr>
+        <fieldset class="person-information">
+            <legend>約用人員資料</legend>
+            <div class="detail">
+                @Html.Label("studyStatus", "身份別")
+                @Html.ValidationMessageFor(m => m.StudyStatus, "", new { @class = "text-danger" })
+                <div class="detail-detail">
+                    <p>
+                        @Html.RadioButtonFor(m => m.StudyStatus, "本校學生", new { id = "currentStudent", @required = "required" })
+                        @Html.Label("currentStudent", "本校學生")
+                    </p>
+                    <p class="otherSchool">
+                        @Html.RadioButtonFor(m => m.StudyStatus, "他校學生", new { id = "otherStudent" })
+                        @Html.Label("otherStudent", "他校學生")
+
+                        @Html.Label("currentSchool", "(就讀學校：")
+                        @Html.TextBox("currentSchool", "", new { id = "currentSchool", @disabled = "disabled" })
+                        @Html.HiddenFor(m => m.StudyStatusMemo, new { id = "studyStatusMemo" })
+                    </p>
+                    <p class="department">
+                        @Html.Label("department", "系所：")
+                        @Html.TextBox("department", "", new { id = "department", @disabled = "disabled" })
+                        @Html.Label("", ")")                        
+                    </p>
+                    <p>
+                        @Html.RadioButtonFor(m => m.StudyStatus, "非在學學生", new { id = "nonStudent", })
+                        @Html.Label("nonStudent", "非在學學生(")
+
+                        @Html.RadioButton("otherJobStatus", "有其他專職", false, new { id = "hasOtherJob", @disabled = "disabled" })
+                        @Html.Label("hasOtherJob", "有其他專職")
+
+                        @Html.RadioButton("otherJobStatus", "無其他專職", false, new { id = "noOtherJob", @disabled = "disabled" })
+                        @Html.Label("noOtherJob", "無其他專職 )")
+                        @Html.HiddenFor(m => m.StudyStatusMemo, new { id = "studyStatusMemo" })
+                    </p>
+                </div>
+                <p>
+                    @Html.Label("studentID", "學號")
+                    @Html.TextBox("studentID", "", new { id = "studentID", @onchange = "updateStudentInfo()" })
+
+                    @Html.LabelFor(m => m.EmployedName, "姓名")
+                    @Html.EditorFor(m => m.EmployedName, new { htmlAttributes = new { id = "name", @required = "required" } })
+                    @Html.ValidationMessageFor(m => m.EmployedName, "", new { @class = "text-danger" })
+                </p>
+                <p>
+                    @Html.LabelFor(m => m.phone, "手機")
+                    @Html.EditorFor(m => m.phone, new { htmlAttributes = new { id = "phone", @required = "required" } })
+                    @Html.ValidationMessageFor(m => m.phone, "", new { @class = "text-danger" })
+
+                    @Html.LabelFor(m => m.ID, "身分證字號")
+                    @Html.EditorFor(m => m.ID, new { htmlAttributes = new { id = "ID", @required = "required" } })
+                    @Html.ValidationMessageFor(m => m.ID, "", new { @class = "text-danger" })
+                </p>
+                <p>
+                    @Html.Label("birthday", "出生日期")
+                    @Html.TextBox("birthdayInput", "", new { type = "date", id = "birthdayInput", @class = "date-input", @required = "required" })
+                    @Html.HiddenFor(m => m.Birthday, new { id = "birthdayHidden" })
+                    @Html.ValidationMessageFor(m => m.Birthday, "", new { @class = "text-danger" })
+                </p>
+
+                <p>
+                    @Html.Label("Employment period", "約用期間")
+                    @Html.TextBox("employedStartInput", "", new { type = "date", id = "employedStartInput", @class = "date-input", @required = "required" })
+                    @Html.HiddenFor(m => m.EmployedStartDate, new { id = "employedStartHidden" })
+                    @Html.ValidationMessageFor(m => m.EmployedStartDate, "", new { @class = "text-danger" })
+
+                    @Html.LabelFor(m => m.EmployedEndDate, "~")
+                    @Html.TextBox("employedEndInput", "", new { type = "date", id = "employedEndInput", @class = "date-input", @required = "required" })
+                    @Html.HiddenFor(m => m.EmployedEndDate, new { id = "employedEndHidden" })
+                    @Html.ValidationMessageFor(m => m.EmployedEndDate, "", new { @class = "text-danger" })
+                </p>
+
+
+                @Html.Label("educationLevel", "級別")
+                @Html.ValidationMessageFor(m => m.EducationLevel, "", new { @class = "text-danger" })
+                <div class="detail-detail">
+                    <p>
+                        @Html.RadioButtonFor(m => m.EducationLevel, "已獲得博士候選人資格", new { id = "phdCandidate", @required = "required" })
+                        @Html.Label("phdCandidate", "已獲得博士候選人資格")
+
+                        @Html.RadioButtonFor(m => m.EducationLevel, "未獲得博士候選人資格", new { id = "nonPhdCandidate" })
+                        @Html.Label("nonPhdCandidate", "未獲得博士候選人資格")
+                    </p>
+                    <p>
+                        @Html.RadioButtonFor(m => m.EducationLevel, "碩士生", new { id = "graduate" })
+                        @Html.Label("graduate", "碩士生")
+
+                        @Html.RadioButtonFor(m => m.EducationLevel, "大學生", new { id = "undergraduate" })
+                        @Html.Label("undergraduate", "大學生")
+
+                        @Html.RadioButtonFor(m => m.EducationLevel, "高中級", new { id = "highSchool" })
+                        @Html.Label("highSchool", "高中級")
+
+                        @Html.RadioButtonFor(m => m.EducationLevel, "講師級", new { id = "lecturer" })
+                        @Html.Label("lecturer", "講師級")
+
+                        @Html.RadioButtonFor(m => m.EducationLevel, "助教級", new { id = "assistant" })
+                        @Html.Label("assistant", "助教級")
+                    </p>
+                </div>
+                    @Html.Label("salary", "獎助金/工作酬金")
+                    @Html.ValidationMessageFor(m => m.SalaryCategory, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.Salary, "", new { @class = "text-danger" })
+                <div class="detail-detail salary">
+                    <p>
+                        @Html.RadioButtonFor(m => m.SalaryCategory, "月薪", new { id = "monthlySalary", @required = "required" })
+                        @Html.Label("monthlySalary", "月薪，每月")
+                        @Html.EditorFor(m => m.Salary, new { htmlAttributes = new { id = "monthlySalaryAmount", @disabled = "disabled" } })
+
+                        @Html.RadioButtonFor(m => m.SalaryCategory, "日薪", new { id = "dailySalary" })
+                        @Html.Label("dailySalary", "日薪，每日")
+                        @Html.EditorFor(m => m.Salary, new { htmlAttributes = new { id = "dailySalaryAmount", @disabled = "disabled" } })
+                    </p>
+                    <p>
+                        @Html.RadioButtonFor(m => m.SalaryCategory, "時薪", new { id = "hourlySalary" })
+                        @Html.Label("hourlySalary", "時薪，每小時")
+                        @Html.EditorFor(m => m.Salary, new { htmlAttributes = new { id = "hourlySalaryAmount", @disabled = "disabled" } })
+                    </p>
+                </div>
+                @Html.Label("isTechPerson", "是否為首次執行國科會計畫之參與研究人員")
+                <div class="detail-detail">
+                    <p>
+
+                        @Html.RadioButtonFor(m => m.IsTechPerson, "是", new { id = "isTechPerson", @required = "required" })
+                        @Html.Label("isTechPerson", "是")
+
+                        @Html.RadioButtonFor(m => m.IsTechPerson, "否", new { id = "notTechPerson" })
+                        @Html.Label("notTechPerson", "否")
+                        @Html.ValidationMessageFor(m => m.IsTechPerson, "", new { @class = "text-danger" })
+                    </p>
+                </div>
+
+            </div>
+        </fieldset>
+        <div class="button-container">
+            <div class="button-container">
+                <button type="submit" name="submitAction" value="save">儲存</button> @* 存db(未送出) *@
+                <button type="submit" name="submitAction" value="submit">送出</button> @* 存db(待審核)，送mail *@
+                <button type="submit">取消</button>
+            </div>
+        </div>
+    }
+</div>
+

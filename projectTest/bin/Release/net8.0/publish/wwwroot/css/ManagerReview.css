@@ -1,0 +1,52 @@
+﻿table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size:24px;
+    margin-top:3%;
+}
+
+.header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+td {
+    border: 2px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+
+.title {
+    font-weight: bold;
+}
+
+.detail-title {
+    color: #5B5B5B;
+    font-weight: bold;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+}
+
+button{
+    width: 100px;
+    padding: 10px;
+    margin: 25px 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #104862;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+

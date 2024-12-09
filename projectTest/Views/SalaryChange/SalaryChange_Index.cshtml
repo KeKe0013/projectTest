@@ -1,0 +1,188 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@model IPagedList<object>
+
+@{
+    Layout = "_UserLayout";
+    ViewData["Title"] = "SalaryChangeIndex";
+    ViewData["userName"] = "張佳琪";
+    ViewData["isLogin"] = 1;
+}
+<link rel="stylesheet" href="~/css/UserSearchPartial.css" />
+<link rel="stylesheet" href="~/css/UserIndex.css" />
+
+<partial name="_SwitchPartial" />
+
+<div class="search-wrapper">
+    <div class="search-container">
+        <form asp-action="SalaryChange_Index" method="get">
+            <input type="hidden" id="isLogin" name="isLogin" value="@ViewData["isLogin"]">
+            <input type="hidden" id="isManager" name="isManager" value="@ViewData["isManager"]">
+            <div class="search_area">
+                <h2>查詢類別</h2>
+                <div class="search-row">
+                    <input type="checkbox" id="fullTimeAssistant" name="fullTimeAssistant" value="true" @(ViewData["FullTimeAssistant"] != null && (bool)ViewData["FullTimeAssistant"] ? "checked" : "")>
+                    <label for="fullTimeAssistant">勞僱型-專任助理</label>
+                </div>
+                <div class="search-row">
+                    <input type="checkbox" id="partTimeAssistant" name="partTimeAssistant" value="true" @(ViewData["PartTimeAssistant"] != null && (bool)ViewData["PartTimeAssistant"] ? "checked" : "")>
+                    <label for="partTimeAssistant">勞僱型-兼任助理</label>
+                </div>
+                <div class="search-row">
+                    <input type="checkbox" id="temporaryWorker" name="temporaryWorker" value="true" @(ViewData["TemporaryWorker"] != null && (bool)ViewData["TemporaryWorker"] ? "checked" : "")>
+                    <label for="temporaryWorker">勞僱型-臨時工(工讀生)</label>
+                </div>
+                <div class="search-row">
+                    <input type="checkbox" id="researchAssistant" name="researchAssistant" value="true" @(ViewData["ResearchAssistant"] != null && (bool)ViewData["ResearchAssistant"] ? "checked" : "")>
+                    <label for="researchAssistant">學習型-研究獎助生</label>
+                </div>
+                <div class="search-row">
+                    <input type="checkbox" id="teachAssistant" name="teachAssistant" value="true" @(ViewData["TeachAssistant"] != null && (bool)ViewData["TeachAssistant"] ? "checked" : "")>
+                    <label for="teachAssistant">學習型-教學獎助生</label>
+                </div>
+                <div class="search-row">
+                    <input type="checkbox" id="serviceAssistant" name="serviceAssistant" value="true" @(ViewData["ServiceAssistant"] != null && (bool)ViewData["ServiceAssistant"] ? "checked" : "")>
+                    <label for="serviceAssistant">學習型-附服務負擔助學金</label>
+                </div>
+            </div>
+            <div class="search_area">
+                <p>計畫名稱</p>
+                <select id="projectNumber" name="projectNumber">
+                    <option value="">所有計畫</option>
+                    <option value="project1">計畫 1</option>
+                    <option value="project2">計畫 2</option>
+                    <option value="project3">計畫 3</option>
+                </select>
+            </div>
+            <div class="search_area">
+                <p>被聘僱者</p>
+                <input type="text" id="employedPerson" name="employedPerson" value="@ViewData["EmployedPerson"]">
+            </div>
+            <div class="search_area">
+                <p>查詢聘僱日期</p>
+                <input type="date" id="searchDate" name="searchDate" value="@(ViewData["SearchDate"] != null ? ((DateTime?)ViewData["SearchDate"]).Value.ToString("yyyy-MM-dd") : "")">
+            </div>
+
+            <div class="button-container">
+                <button type="submit">確認</button>
+            </div>
+        </form>
+    </div>
+    <div class="table-container">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>聘單編號</th>
+                    <th>計畫名稱</th>
+                    @* <th>聘僱者</th> *@
+                    <th>被聘僱者</th>
+                    <th>聘僱期間</th>
+                    <th>聘僱類別</th>
+                    <th>審核狀態</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item is projectTest.ViewModels.FullTimeOrderViewModel fullTimeOrder)
+                    {
+                        @if (fullTimeOrder.FullTimeOrder.isApplySalaryChange == "0")
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(x => fullTimeOrder.FullTimeOrder.FullTime_orderNo)</td>
+                                <td>
+                                    @Html.ActionLink(
+                                             linkText: string.Join(", ", fullTimeOrder.FullTimeOrderDetails.Select(d => d.PlanName)),
+                                             actionName: "OrderDetail",
+                                             controllerName: "User",
+                                             routeValues: new
+                                             {
+                                                 isManager = ViewData["isManager"],
+                                                 isLogin = ViewData["isLogin"],
+                                                 order_id = fullTimeOrder.FullTimeOrder.FullTime_orderNo,
+                                                 category = fullTimeOrder.FullTimeOrder.Category
+                                             },
+                                             htmlAttributes: new { @class = "btn btn-plan project-name" }
+                                             )
+                                </td>
+                                @* <td>@Html.DisplayFor(x => fullTimeOrder.FullTimeOrderDetail.LeaderName)</td> *@
+                                <td>@Html.DisplayFor(x => fullTimeOrder.FullTimeOrder.EmployedName)</td>
+                                <td>@Html.DisplayFor(x => fullTimeOrder.FullTimeOrder.EmployedStartDate) - @Html.DisplayFor(x => fullTimeOrder.FullTimeOrder.EmployedEndDate)</td>
+                                <td>@Html.DisplayFor(x => fullTimeOrder.FullTimeOrder.Category)</td>
+
+                                <td>
+                                    @Html.ActionLink(
+                                             "薪資變更",
+                                             actionName: "SalaryChange",
+                                             controllerName: "SalaryChange",
+                                             routeValues: new { isLogin = ViewData["isLogin"], order_id = fullTimeOrder.FullTimeOrder.FullTime_orderNo, category = fullTimeOrder.FullTimeOrder.Category },
+                                             htmlAttributes: new { @class = "btn btn-info" }
+                                             )
+                                </td>
+                            </tr>
+                            }
+                    }
+                    else if (item is projectTest.Models.PartTime_order partTimeOrder)
+                    {
+                        @if (partTimeOrder.isApplySalaryChange == "0")
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(x => partTimeOrder.PartTime_orderNo)</td>
+                                <td>
+                                    @Html.ActionLink(
+                                             linkText: partTimeOrder.PlanName,
+                                             actionName: "OrderDetail",
+                                             controllerName: "User",
+                                             routeValues: new { isManager = ViewData["isManager"], isLogin = ViewData["isLogin"], order_id = partTimeOrder.PartTime_orderNo, category = partTimeOrder.Category },
+                                             htmlAttributes: new { @class = "btn btn-plan project-name" }
+                                             )
+                                </td>
+                                @* <td>@Html.DisplayFor(x => partTimeOrder.LeaderName)</td> *@
+                                <td>@Html.DisplayFor(x => partTimeOrder.EmployedName)</td>
+                                <td>@Html.DisplayFor(x => partTimeOrder.EmployedStartDate) - @Html.DisplayFor(x => partTimeOrder.EmployedEndDate)</td>
+                                <td>@Html.DisplayFor(x => partTimeOrder.Category)</td>
+
+                                <td>
+                                    @Html.ActionLink(
+                                             "薪資變更",
+                                             actionName: "SalaryChange",
+                                             controllerName: "SalaryChange",
+                                             routeValues: new { isLogin = ViewData["isLogin"], order_id = partTimeOrder.PartTime_orderNo, category = partTimeOrder.Category },
+                                             htmlAttributes: new { @class = "btn btn-info" }
+                                    )
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+
+        </table>
+
+        <nav aria-label="Page navigation example">
+            @Html.PagedListPager(Model, page => Url.Action("SalaryChange_Index", new
+                {
+                    page,
+                    isLogin = ViewData["isLogin"],
+                    isManager = ViewData["isManager"],
+                    fullTimeAssistant = ViewData["FullTimeAssistant"],
+                    partTimeAssistant = ViewData["PartTimeAssistant"],
+                    temporaryWorker = ViewData["TemporaryWorker"],
+                    researchAssistant = ViewData["ResearchAssistant"],
+                    teachAssistant = ViewData["TeachAssistant"],
+                    serviceAssistant = ViewData["ServiceAssistant"],
+                    employedPerson = ViewData["EmployedPerson"],
+                    searchDate = ViewData["SearchDate"]
+                }), new PagedListRenderOptions
+       {
+           UlElementClasses = new[] { "pagination", "justify-content-center" },
+           LiElementClasses = new[] { "page-item" },
+           PageClasses = new[] { "btn", "btn-outline-info", "page-link" },
+           ActiveLiElementClass = "active",
+       })
+
+        </nav>
+
+    </div>
+</div>
+

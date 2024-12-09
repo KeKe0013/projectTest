@@ -1,0 +1,161 @@
+﻿form {
+    background-color: #E8E8E8;
+    margin: 0 auto;
+    padding: 20px;
+    width: 70%;
+    border-radius: 10px;
+    margin-top: 3%;
+}
+
+h2 {
+    text-align: center;
+    font-weight: bold;
+}
+
+fieldset {
+    margin-bottom: 15px;
+    padding: 10px;
+    
+}
+
+.plan-information {
+    background: #ffffff;
+    border-radius: 15px;
+    margin: 30px 30px;
+}
+
+legend {
+    padding: 0 10px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+span {
+    margin: 0 10px;
+    font-size: 28px;
+}
+
+label {
+    margin: 0 1%;
+    font-size: 28px;
+}
+
+.plan-information input[type="text"],
+.Application-form select {
+    width: calc(70% - 20px);
+    margin: 5px 20px;
+    padding-left: 1%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 35px;
+    font-size: 26px;
+}
+
+.Application-form input[type="radio"] {
+    transform: scale(1.5);
+    margin-right: 1%;
+    margin-left: 1%;
+}
+
+.person-information input[type="text"],
+.person-information input[type="date"],
+.person-information input[type="tel"] {
+    font-size: 26px;
+    height: 35px;
+    width: 25%;
+    margin-left: 1%;
+    padding-left: 1%;
+}
+
+.Application-form button[type="submit"],
+.Application-form button[type="reset"] {
+    width: 100px;
+    padding: 10px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #104862;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.Application-form button [type="submit"]:hover,
+.Application-form button [type="reset"]:hover {
+    opacity: 0.1;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+}
+
+hr {
+    width: 95%;
+    margin: 15px auto;
+}
+
+.detail, .detail-detail {
+    margin-left: 5%;
+}
+
+.salary input[type="text"] {
+    width: 20%;
+    margin-right: 1%;
+}
+
+.department {
+    margin-left: 30.5%;
+}
+
+.otherSchool input[type="text"] {
+    width: 27.5%;
+}
+
+.department input[type="text"] {
+    width: 40%;
+}
+
+.detail input[type="date"] {
+    font-size: 26px;
+    height: 35px;
+    width: 25%;
+    margin-left: 2.5%;
+    padding-left: 1%;
+}
+
+
+.appropriationBalance input[type="text"] {
+    background-color: transparent;
+    border: none;
+}
+
+.totalBalance {
+    background: #AEAEAE;
+    margin-left: 65%;
+    border-radius: 5px;
+    width: 30%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    text-align: center;
+}
+
+.totalBalance label {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.totalBalance input[type="text"] {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    width: 100px;
+    text-align: center;
+}

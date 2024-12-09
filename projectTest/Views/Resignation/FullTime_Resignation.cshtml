@@ -1,0 +1,122 @@
+﻿@model projectTest.ViewModels.FullTimeOrderViewModel
+
+@{
+    Layout = "_UserLayout";
+    ViewData["Title"] = "Resignation";
+    ViewData["userName"] = "張佳琪";
+    ViewData["isLogin"] = 1;
+    ViewData["isManager"] = 1;
+}
+
+<link rel="stylesheet" href="~/css/Edit.css" />
+
+<div class="Application-form">
+    <form id="Requisition" method="post" asp-action="FullTime_Resignation">
+        <input type="hidden" name="originalOrderId" value="@Model.FullTimeOrder.FullTime_orderNo" />
+        <h2>國立高雄大學計畫專任人員聘僱申請單</h2>
+        <fieldset class="application">
+            <legend>申請事項</legend>
+            <div class="detail">
+                <label for="resignDate">離職</label>
+                <label>
+                    自
+                    <input type="date" id="resignDate" name="resignDate" class="date-input">
+                    @Html.ValidationMessageFor(m => m.FullTimeOrder.ResignDate, "", new { @class = "text-danger" })
+                    起離職
+                </label>
+            </div>
+        </fieldset>
+
+        <hr>
+        @if (Model.FullTimeOrderDetails != null && Model.FullTimeOrderDetails.Any())
+        {
+            foreach (var detail in Model.FullTimeOrderDetails)
+            {
+                <fieldset class="plan-information">
+                    <legend>計畫資料</legend>
+                    <div class="detail">
+                        <p>
+                            <label for="projectName">計畫名稱</label>
+                            <label>@detail.PlanName</label>
+                        </p>
+                        <p>
+                            <label for="accountingNumber">會計編號</label>
+                            <label>@detail.AccountNo</label>
+                        </p>
+                        <p>
+                            <label for="projectNumber">計畫編號</label>
+                            <label>@detail.PlanNo</label>
+                        </p>
+                        <div>
+                            <label for="commissionedUnit">委託機構</label>
+                            <label>@detail.CommissionName</label>
+                            <p>
+                                <label for="startDate">執行期間</label>
+                                <label>@detail.PlanStartDate</label>
+                                <label for="endDate">~</label>
+                                <label>@detail.PlanEndDate</label>
+                            </p>
+                        </div>
+                    </div>
+                </fieldset>
+            }
+        }
+        else
+        {
+            <p>無計畫資料。</p>
+        }
+        <hr>
+        <fieldset class="person-information">
+            <legend>聘僱人員資料</legend>
+            <div class="detail">
+                <p>
+                    <label for="name">姓名</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.EmployedName)</label>                    
+                </p>
+                <p>
+                    <label for="idNumber">身分證字號</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.ID)</label>
+                </p>
+                <p>
+                    <label for="birthday">出生日期</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.Birthday)</label>
+                </p>
+                <p>                    
+                    <label for="phone">聯絡電話</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.Phone)</label>
+                </p>
+
+                <p>
+                    <label for="startDate">聘僱期間</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.EmployedStartDate)</label>
+                    <label for="endDate">~</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.EmployedEndDate)</label>
+                </p>
+
+                <p>
+                    <label for="educationLevel">學歷</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.EducationLevel)</label>
+                </p>
+                                   
+                <p>
+                    <label for="jobTitle">職稱</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.JobTitle)</label>
+                </p>
+                <p>
+                    <label for="salaryGrade">薪級</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.SalaryGrade)</label>                    
+                </p>
+                <p>
+                    <label for="salary">薪資</label>
+                    <label>每月 @Html.DisplayFor(m => m.FullTimeOrder.Salary) 元整</label>
+                </p>
+
+                
+            </div>
+        </fieldset>
+        <div class="button-container">
+            <button type="submit" name="submitAction" value="save">送出</button>
+            <button type="reset">取消</button>
+        </div>
+    </form>
+</div> 

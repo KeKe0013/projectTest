@@ -1,0 +1,159 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = projectTest
+build_property.RootNamespace = projectTest
+build_property.ProjectDir = C:\Users\m9111\source\repos\projectTest_1203\projectTest_1122\projectTest\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\m9111\source\repos\projectTest_1203\projectTest_1122\projectTest
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/EditOrder/FullTime_Edit_NewHire.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdE9yZGVyXEZ1bGxUaW1lX0VkaXRfTmV3SGlyZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/EditOrder/FullTime_Edit_Renewal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdE9yZGVyXEZ1bGxUaW1lX0VkaXRfUmVuZXdhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/EditOrder/FullTime_Edit_Resignation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdE9yZGVyXEZ1bGxUaW1lX0VkaXRfUmVzaWduYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/EditOrder/FullTime_Edit_SalaryChange.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdE9yZGVyXEZ1bGxUaW1lX0VkaXRfU2FsYXJ5Q2hhbmdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/EditOrder/PartTime_Edit_NewHire.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdE9yZGVyXFBhcnRUaW1lX0VkaXRfTmV3SGlyZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/EditOrder/PartTime_Edit_Renewal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdE9yZGVyXFBhcnRUaW1lX0VkaXRfUmVuZXdhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/EditOrder/PartTime_Edit_Resignation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdE9yZGVyXFBhcnRUaW1lX0VkaXRfUmVzaWduYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/EditOrder/PartTime_Edit_SalaryChange.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdE9yZGVyXFBhcnRUaW1lX0VkaXRfU2FsYXJ5Q2hhbmdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Home/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Manager/FullTime_Review.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxGdWxsVGltZV9SZXZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Manager/ManagerIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxNYW5hZ2VySW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Manager/PartTime_Review.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxQYXJ0VGltZV9SZXZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/NewHire/fullTimeAssistant.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmV3SGlyZVxmdWxsVGltZUFzc2lzdGFudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/NewHire/partTimeAssistant.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmV3SGlyZVxwYXJ0VGltZUFzc2lzdGFudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Renewal/FullTime_Renewal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVuZXdhbFxGdWxsVGltZV9SZW5ld2FsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Renewal/PartTime_Renewal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVuZXdhbFxQYXJ0VGltZV9SZW5ld2FsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Renewal/Renewal_Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVuZXdhbFxSZW5ld2FsX0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Resignation/FullTime_Resignation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzaWduYXRpb25cRnVsbFRpbWVfUmVzaWduYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Resignation/PartTime_Resignation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzaWduYXRpb25cUGFydFRpbWVfUmVzaWduYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Resignation/Resignation_Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzaWduYXRpb25cUmVzaWduYXRpb25fSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/SalaryChange/FullTime_SalaryChange.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsYXJ5Q2hhbmdlXEZ1bGxUaW1lX1NhbGFyeUNoYW5nZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/SalaryChange/PartTime_SalaryChange.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsYXJ5Q2hhbmdlXFBhcnRUaW1lX1NhbGFyeUNoYW5nZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/SalaryChange/SalaryChange_Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsYXJ5Q2hhbmdlXFNhbGFyeUNoYW5nZV9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Shared/_AddPlan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZGRQbGFuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Shared/_ManagerLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NYW5hZ2VyTGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Shared/_SwitchPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Td2l0Y2hQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Shared/_UserLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Vc2VyTGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/User/FullTime_detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxGdWxsVGltZV9kZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/User/PartTime_detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxQYXJ0VGltZV9kZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/User/UserIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VySW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/m9111/source/repos/projectTest_1203/projectTest_1122/projectTest/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-9xmot0ynb4

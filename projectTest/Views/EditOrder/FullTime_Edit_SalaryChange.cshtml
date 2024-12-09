@@ -1,0 +1,151 @@
+﻿@model projectTest.ViewModels.FullTimeOrderViewModel
+
+@{
+    Layout = ViewData["isManager"] != null && (int)ViewData["isManager"] == 1 ? "_ManagerLayout" : "_UserLayout";
+    ViewData["Title"] = "FullTime_Edit_SalaryChange";
+    ViewData["userName"] = "張佳琪";
+    ViewData["isLogin"] = 1;
+    ViewData["isManager"] = 1;
+}
+
+<link rel="stylesheet" href="~/css/Edit.css" />
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/UserNewHire_partTime.js" asp-append-version="true"></script>
+}
+
+<div class="Application-form">
+    @using (Html.BeginForm("FullTime_Edit_SalaryChange", "EditOrder", FormMethod.Post, new { id = "Requisition" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("isLogin", ViewData["isLogin"])
+        @Html.Hidden("isManager", ViewData["isManager"])
+        @Html.HiddenFor(m => m.FullTimeOrder.FullTime_orderNo)
+        ;
+
+        <h2>國立高雄大學計畫專任人員聘僱申請單</h2>
+        <fieldset class="application">
+            <legend>申請事項</legend>
+            <div class="detail">
+                <label for="resignDate">薪資變更</label>
+                <label>
+                    原薪資為每月 @Html.DisplayFor(m => m.FullTimeOrder.Salary) 元
+                    ，自
+                    @Html.TextBox("SalaryChangeInput", "", new { type = "date", id = "SalaryChangeInput", @class = "date-input", @required = "required" })
+                    @Html.HiddenFor(m => m.FullTimeOrder.SalaryChangeDate, new { id = "SalaryChangeHidden" })
+                    @Html.ValidationMessageFor(m => m.FullTimeOrder.SalaryChangeDate, "", new { @class = "text-danger" })
+                    起調整為
+                    <p>
+                        @Html.Label("salaryGrade", "薪級")
+                        @Html.DropDownListFor(m => m.FullTimeOrder.SalaryGrade, new List<SelectListItem>{
+                    new SelectListItem { Value = "0", Text = "請選擇薪級", Selected = true },
+                    new SelectListItem { Value = "1" ,Text = "1"},
+                    new SelectListItem { Value = "2" ,Text = "2"},
+                    new SelectListItem { Value = "3" ,Text = "3"},
+                    new SelectListItem { Value = "4" ,Text = "4"},
+                    new SelectListItem { Value = "5" ,Text = "5"},
+                    new SelectListItem { Value = "6" ,Text = "6"},
+                    new SelectListItem { Value = "7" ,Text = "7"},
+                    new SelectListItem { Value = "8" ,Text = "8"},
+                    new SelectListItem { Value = "9" ,Text = "9"}
+                    }, new { id = "salaryGrade" })
+                    </p>
+                    @Html.Label("salary", "每月")
+                    @Html.EditorFor(m => m.FullTimeOrder.Salary, new { htmlAttributes = new { id = "salary", @required = "required" } })
+                    @Html.Label("salary", "元整")
+
+                </label>
+            </div>
+            <legend>薪資調整理由及調整幅度說明</legend>
+            <div class="detail">
+                @Html.EditorFor(m => m.FullTimeOrder.SalaryChangeReason, new { htmlAttributes = new { id = "ChangeReason" } })
+            </div>
+
+        </fieldset>
+        <hr>
+
+        @if (Model.FullTimeOrderDetails != null && Model.FullTimeOrderDetails.Any())
+        {
+            foreach (var detail in Model.FullTimeOrderDetails)
+            {
+                <fieldset class="plan-information">
+                    <legend>計畫資料</legend>
+                    <div class="detail">
+                        <p>
+                            <label for="projectName">計畫名稱</label>
+                            <label>@detail.PlanName</label>
+                        </p>
+                        <p>
+                            <label for="accountingNumber">會計編號</label>
+                            <label>@detail.AccountNo</label>
+                        </p>
+                        <p>
+                            <label for="projectNumber">計畫編號</label>
+                            <label>@detail.PlanNo</label>
+                        </p>
+                        <div>
+                            <label for="commissionedUnit">委託機構</label>
+                            <label>@detail.CommissionName</label>
+                            <p>
+                                <label for="startDate">執行期間</label>
+                                <label>@detail.PlanStartDate</label>
+                                <label for="endDate">~</label>
+                                <label>@detail.PlanEndDate</label>
+                            </p>
+                        </div>
+                    </div>
+                </fieldset>
+            }
+        }
+        else
+        {
+            <p>無計畫資料。</p>
+        }
+        <hr>
+        <fieldset class="person-information">
+            <legend>聘僱人員資料</legend>
+            <div class="detail">
+                <p>
+                    <label for="name">姓名</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.EmployedName)</label>
+                </p>
+                <p>
+                    <label for="idNumber">身分證字號</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.ID)</label>
+                </p>
+                <p>
+                    <label for="birthday">出生日期</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.Birthday)</label>
+                </p>
+                <p>
+                    <label for="phone">聯絡電話</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.Phone)</label>
+                </p>
+
+                <p>
+                    <label for="startDate">聘僱期間</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.EmployedStartDate)</label>
+                    <label for="endDate">~</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.EmployedEndDate)</label>
+                </p>
+
+                <p>
+                    <label for="educationLevel">學歷</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.EducationLevel)</label>
+                </p>
+
+                <p>
+                    <label for="jobTitle">職稱</label>
+                    <label>@Html.DisplayFor(m => m.FullTimeOrder.JobTitle)</label>
+                </p>
+            </div>
+        </fieldset>
+        <div class="button-container">
+            <button type="submit" name="submitAction" value="save">儲存</button>
+            <button type="submit" name="submitAction" value="cancel">取消</button>
+        </div>
+    }
+</div>
+
+
+

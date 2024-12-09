@@ -1,0 +1,69 @@
+﻿@model projectTest.ViewModels.FullTimeOrderViewModel
+
+@section Scripts {
+    <script src="~/js/UserNewHire_fullTime.js" asp-append-version="true"></script>
+    <script src="~/js/GetProjectData.js" asp-append-version="true"></script>
+}
+
+@{
+    var i = (int)ViewData["Index"]-1;
+}
+
+<fieldset class="plan-information">
+    <legend>計畫資料</legend>
+    <div class="detail">
+        <div class="category-row">  
+            <p>
+                @Html.Label($"FullTimeOrderDetails[__index__].FundingSource", "經費來源")
+                @Html.DropDownList($"FullTimeOrderDetails[__index__].FundingSource",
+                         new List<SelectListItem> {
+                new SelectListItem { Value = "none", Text = "請選擇經費來源", Selected = true },
+                new SelectListItem { Value = "(經常門)部門預算", Text = "(經常門)部門預算" },
+                new SelectListItem { Value = "(經常門)計畫預算", Text = "(經常門)計畫預算" },                
+                },
+                new { id = "fundingSource__index__", @required = "required", @onchange = "updatePlanNames(__index__)" }
+                )
+            </p>
+            <p>
+                @Html.Label("planName__index__", "計畫名稱")
+                @Html.DropDownListFor(m => m.FullTimeOrderDetails[i].PlanName, new List<SelectListItem>{
+                new SelectListItem { Value = "", Text = "請選擇計畫名稱", Selected = true }
+                }, new { id = "planName__index__", @required = "required" })
+                @Html.ValidationMessageFor(m => m.FullTimeOrderDetails[i].PlanName, "", new { @class = "validation-message" })
+            </p>
+
+            <p>
+                @Html.Label("accountNo__index__", "會計編號")
+                @Html.EditorFor(m => m.FullTimeOrderDetails[i].AccountNo, new { htmlAttributes = new { id = "accountNo__index__", @required = "required" } })
+                @Html.ValidationMessageFor(m => m.FullTimeOrderDetails[i].AccountNo, "", new { @class = "validation-message" })
+            </p>
+            
+            <p>
+                @Html.Label("planNo__index__", "計畫編號")
+                @Html.EditorFor(m => m.FullTimeOrderDetails[i].PlanNo, new { htmlAttributes = new { id = "planNo__index__" } })
+                @Html.ValidationMessageFor(m => m.FullTimeOrderDetails[i].PlanNo, "", new { @class = "validation-message" })
+            </p>            
+
+            <p>
+                @Html.Label("CommissionName__index__e", "委託機構")
+                @Html.EditorFor(m => m.FullTimeOrderDetails[i].CommissionName, new { htmlAttributes = new { id = "CommissionName__index__", @required = "required", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(m => m.FullTimeOrderDetails[i].CommissionName, "", new { @class = "validation-message" })
+            </p>
+
+            <p>
+                @Html.Label("planStartInput__index__", "執行期間")
+                @Html.TextBox("planStartInput__index__", "", new { type = "date", id = "planStartInput__index__", @class = "date - input", @required = "required", @readonly = "readonly" })
+                @Html.HiddenFor(m => m.FullTimeOrderDetails[i].PlanStartDate, new { id = "planStartHidden__index__" })
+                @Html.ValidationMessageFor(m => m.FullTimeOrderDetails[i].PlanStartDate, "", new { @class = "text-danger" })
+
+                @Html.Label("planEndInput__index__", "~")
+                @Html.TextBox("planEndInput__index__", "", new { type = "date", id = "planEndInput__index__", @class = "date - input", @required = "required", @readonly = "readonly" })
+                @Html.HiddenFor(m => m.FullTimeOrderDetails[i].PlanEndDate, new { id = "planEndHidden__index__" })
+                @Html.ValidationMessageFor(m => m.FullTimeOrderDetails[i].PlanEndDate, "", new { @class = "text-danger" })
+            </p>
+            @Html.HiddenFor(m => m.FullTimeOrderDetails[i].LeaderName, new { id = "leaderNameHidden__index__" })
+            
+        </div>
+    </div>
+</fieldset>
+<hr>
